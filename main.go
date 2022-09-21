@@ -12,8 +12,8 @@ import (
 )
 
 func main() {
-	os.Setenv("SLACK_BOT_TOKEN", "xoxb-")
-	os.Setenv("SLACK_APP_TOKEN", "xapp-")
+	os.Setenv("SLACK_BOT_TOKEN", "xoxb-2441678027074-4083472090887-GooxxmGUDQWn0aw8PrDVmVXX")
+	os.Setenv("SLACK_APP_TOKEN", "xapp-1-A0438JXF8FK-4121722949760-8603ffdb7e7f2e043e347d99e90e945690e6e0362047b63e0f0689e242e9e5cc")
 
 	bot := slacker.NewClient(os.Getenv("SLACK_BOT_TOKEN"), os.Getenv("SLACK_APP_TOKEN"))
 
@@ -47,7 +47,7 @@ func main() {
 
 			if ev.Channel != "" {
 				client.PostMessage(ev.Channel, slack.MsgOptionText("Uploading file...", false))
-				_, err := client.UploadFile(slack.FileUploadParameters{Title: "Text", Content: sentence, Channels: []string{ev.Channel}})
+				_, err := client.UploadFile(slack.FileUploadParameters{Title: "Text", Content: sentence, Channels: []string{ev.Channel}, File: "slack.png"})
 				if err != nil {
 					fmt.Printf("Error uploading file: %s", err)
 				}
