@@ -38,6 +38,24 @@ func main() {
 		},
 	})
 
+	definition := &slacker.CommandDefinition{
+		Description: "Upload a text file containing sentence.",
+		Handler: func(botCtx slacker.BotContext, request slacker.Request, response slacker.ResponseWriter) {
+			sentence := request.Param("sentence")
+			client := botCtx.Client()
+			ev := botCtx.Event()
+
+			if ev.Channel != "" {
+				client.PostMessage(ev.Channel, slack.MsgOptionText("Uploading file...", false))
+				_, err := client.UploadFile(slack.FileUploadParameters{Title: "Text", Content: sentence, Channels: []string{ev.Channel}})
+				if err != nil {
+					fmt.Printf("Error uploading file: %s", err)
+				}
+			}
+		},
+	}
+	bot.Command("upload <sentence>", definition)
+
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
